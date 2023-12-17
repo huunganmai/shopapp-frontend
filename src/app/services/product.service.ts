@@ -23,4 +23,8 @@ export class ProductService {
             .set('limit', limit.toString());
         return this.http.get<Product[]>(this.apiProduct, {params});
     }
+
+    getDetailProducts(productId: number) {
+        return this.http.get<Product>(`${this.apiProduct}/${productId}`);
+    }
 }
