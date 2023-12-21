@@ -3,6 +3,7 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { ProductImage } from '../../models/product.image';
 import { environment } from '../../environments/environment';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -18,6 +19,7 @@ export class DetailProductComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private cartService: CartService
   ) {
   
   }
@@ -75,5 +77,38 @@ export class DetailProductComponent implements OnInit {
   thumbnailClick(index: number): void {
     debugger;
     this.showImage(index);
+  }
+
+  addToCart(): void {
+    debugger;
+    this.isPressedAddToCart = true;
+    if(this.product) {
+      this.cartService.addToCart(this.product.id, this.quantity)
+    } else {
+      console.error('Cannot add product to cart: Product is null');
+    }
+  }
+
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+
+  decreaseQuantity(): void {
+    if(this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  getTotalPrice(): number {
+    if(this.product) {
+      return this.product.price * this.quantity;
+    }
+    return 0;
+  }
+
+  buyNow(): void {
+    if(this.isPressedAddToCart) {
+      this.addToCart();
+    }
   }
 }
