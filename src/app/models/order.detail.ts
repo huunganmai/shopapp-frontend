@@ -1,5 +1,5 @@
-import { Product } from "./product";
-import {Order} from './order'
+import { Product } from './product';
+import { Order } from './order';
 export interface OrderDetail {
     id: number;
     order: Order;

@@ -1,5 +1,4 @@
-import { Injectable } from "@angular/core";
-
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -9,15 +8,15 @@ export class CartService {
 
     constructor() {
         const storedCart = localStorage.getItem('cart');
-        if(storedCart) {
+        if (storedCart) {
             this.cart = new Map(JSON.parse(storedCart));
         }
     }
 
     addToCart(productId: number, quantity: number) {
-        debugger
-        if(this.cart.has(productId)) {
-            this.cart.set(productId, this.cart.get(productId)! + quantity)
+        debugger;
+        if (this.cart.has(productId)) {
+            this.cart.set(productId, this.cart.get(productId)! + quantity);
         } else {
             this.cart.set(productId, quantity);
         }
@@ -26,8 +25,8 @@ export class CartService {
     }
 
     saveCartToLocalStorage(): void {
-        debugger
-        localStorage.setItem('cart', JSON.stringify(Array.from(this.cart.entries())))
+        debugger;
+        localStorage.setItem('cart', JSON.stringify(Array.from(this.cart.entries())));
     }
 
     getCart(): Map<number, number> {
@@ -36,6 +35,6 @@ export class CartService {
 
     clearCart(): void {
         this.cart.clear();
-        this.saveCartToLocalStorage()
+        this.saveCartToLocalStorage();
     }
 }

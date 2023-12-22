@@ -1,5 +1,6 @@
-import { OrderDetail } from './order.detail';
-export interface Order {
+import { OrderDetail } from '../models/order.detail';
+
+export interface OrderResponse {
     id: number;
     user_id: number;
     fullname: string;
@@ -13,8 +14,6 @@ export interface Order {
     shipping_method: string;
     shipping_address: string;
     shipping_date: Date;
-    tracking_number: string;
     payment_method: string;
-    active: boolean;
     order_details: OrderDetail[];
 }

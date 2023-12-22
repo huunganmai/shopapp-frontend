@@ -25,14 +25,14 @@
     color: white;
 }
 .form-control::placeholder {
-    color: rgba($color: #FFFFFF, $alpha: 0.3);
+    color: rgba($color: #ffffff, $alpha: 0.3);
 }
 .form-control:focus {
     color: white;
     background-color: transparent;
     outline: none !important;
-    outline-color: #FFFFFF;
-    border-color: transparent;    
+    outline-color: #ffffff;
+    border-color: transparent;
 }
 
 .divider-nospace {
@@ -58,14 +58,15 @@
     align-items: center;
     margin-top: 10px;
 }
-.checkbox-text input[type="checkbox"]:checked {
+.checkbox-text input[type='checkbox']:checked {
     border-color: white;
-    background-color: rgb(233,66,178);
+    background-color: rgb(233, 66, 178);
 }
 .form-check-input {
     margin-right: 5px;
 }
-.forgot-password-link, .register-link {
+.forgot-password-link,
+.register-link {
     color: $shopapp-title-color;
     text-decoration: none;
 }

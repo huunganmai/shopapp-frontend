@@ -23,41 +23,36 @@ export class LoginComponent implements OnInit {
     roles: Role[] = [];
     selectedRole: Role | undefined;
 
-
     constructor(
-        private router: Router, 
+        private router: Router,
         private userService: UserService,
         private tokenService: TokenService,
         private roleService: RoleService
-        ) {
-    }
+    ) {}
 
     ngOnInit() {
-        debugger
+        debugger;
         this.roleService.getRoles().subscribe({
             next: (roles: Role[]) => {
-                debugger
+                debugger;
                 this.roles = roles;
                 this.selectedRole = roles.length > 0 ? roles[0] : undefined;
-
             },
             complete: () => {
-                debugger
+                debugger;
             },
             error: (error: any) => {
-                debugger
+                debugger;
                 console.error('Error getting roles:', error);
             }
-        })
+        });
     }
 
     login() {
-
         const loginDTO = {
             phone_number: this.phoneNumber,
             password: this.password,
             role_id: this.selectedRole?.id ?? 1
-
         };
 
         this.userService.login(loginDTO).subscribe({
@@ -69,7 +64,7 @@ export class LoginComponent implements OnInit {
                 //     // Handle error
                 // }
 
-                const {token} = response;
+                const { token } = response;
                 this.tokenService.setToken(token);
             },
             complete: () => {
