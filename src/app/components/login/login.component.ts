@@ -6,6 +6,7 @@ import { LoginResponse } from '../../response/login.response';
 import { TokenService } from '../../services/token.service';
 import { RoleService } from '../../services/role.service';
 import { Role } from '../../models/role';
+import { UserResponse } from '../../response/user.response';
 
 @Component({
     selector: 'app-login',
@@ -17,12 +18,13 @@ export class LoginComponent implements OnInit {
 
     phoneNumber: string = '111111';
     password: string = '';
-    rememberLogin: boolean = false;
     showPassword: boolean = false;
+    rememberLogin: boolean = false;
 
     roles: Role[] = [];
     selectedRole: Role | undefined;
 
+    userResponse?: UserResponse;
     constructor(
         private router: Router,
         private userService: UserService,
@@ -49,6 +51,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
+        debugger;
         const loginDTO = {
             phone_number: this.phoneNumber,
             password: this.password,
@@ -58,20 +61,41 @@ export class LoginComponent implements OnInit {
         this.userService.login(loginDTO).subscribe({
             next: (response: LoginResponse) => {
                 debugger;
-                // if (response.token)) {
-                //     //this.router.navigate(['/login']);
-                // } else {
-                //     // Handle error
-                // }
-
                 const { token } = response;
-                this.tokenService.setToken(token);
+                if (this.rememberLogin) {
+                    this.tokenService.setToken(token);
+                    debugger;
+                    this.userService.getUserDetail(token).subscribe({
+                        next: (response: any) => {
+                            debugger;
+                            this.userResponse = {
+                                ...response,
+                                date_of_birth: new Date(response.date_of_birth)
+                            };
+                            this.userService.saveUserResponseToLocalStorage(this.userResponse);
+
+                            if (this.userResponse?.role.name == 'admin') {
+                                this.router.navigate(['/admin']);
+                            } else if (this.userResponse?.role.name == 'user') {
+                                this.router.navigate(['/']);
+                            }
+                        },
+                        complete: () => {
+                            debugger;
+                        },
+                        error: (error: any) => {
+                            debugger;
+                            console.error('Cannot fetch user detail: ', error);
+                        }
+                    });
+                }
             },
             complete: () => {
                 debugger;
             },
             error: (error: any) => {
                 debugger;
+                console.error('Cannot fetch user detail: ', error);
                 alert(`Cannot register, error: ${error.error}`);
             }
         });
