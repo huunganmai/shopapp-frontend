@@ -7,6 +7,7 @@ import { DetailProductComponent } from './components/detail-product/detail-produ
 import { OrderComponent } from './components/order/order.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { DetailOrderComponent } from './components/detail-order/detail-order.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -15,7 +16,7 @@ const routes: Routes = [
     { path: 'user-profile', component: UserProfileComponent },
     { path: 'products/:id', component: DetailProductComponent },
     { path: 'orders', component: OrderComponent },
-    { path: 'orders/:id', component: DetailProductComponent },
+    { path: 'orders/:id', component: DetailOrderComponent },
     // Admin
     { path: 'admin', component: AdminComponent }
 ];
