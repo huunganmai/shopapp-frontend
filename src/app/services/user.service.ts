@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { HttpUtilService } from './http.util.service';
 import { TokenService } from './token.service';
 import { UserResponse } from '../response/user.response';
+import { UpdateUserDTO } from '../dtos/user/update.user.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -15,11 +16,12 @@ export class UserService {
     private apiRegister = `${environment.apiBaseUrl}/users/register`;
     private apiLogin = `${environment.apiBaseUrl}/users/login`;
     private apiUserDetail = `${environment.apiBaseUrl}/users/details`;
-    token = this.tokenService.getToken();
 
     private apiConfig = {
         headers: this.httpUtilService.createHeaders()
     };
+
+    token = this.tokenService.getToken();
 
     constructor(
         private http: HttpClient,
@@ -39,6 +41,13 @@ export class UserService {
         let newHeader = this.apiConfig;
         newHeader.headers.set('Authorization', `Bearer ${this.token}`);
         return this.http.post(this.apiUserDetail, newHeader);
+    }
+
+    updateUser(token: string, updatedUserDTO: UpdateUserDTO) {
+        let newHeader = this.apiConfig;
+        newHeader.headers.set('Authorization', `Bearer ${this.token}`);
+        const id = this.tokenService.getUserId();
+        return this.http.put(`${this.apiUserDetail}/${id}`, updatedUserDTO, newHeader);
     }
 
     saveUserResponseToLocalStorage(userResponse?: UserResponse) {
