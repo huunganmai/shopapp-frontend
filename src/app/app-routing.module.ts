@@ -8,14 +8,15 @@ import { OrderComponent } from './components/order/order.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { DetailOrderComponent } from './components/detail-order/detail-order.component';
+import { AuthGuardFn } from './guards/auth.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'user-profile', component: UserProfileComponent },
+    { path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuardFn] },
     { path: 'products/:id', component: DetailProductComponent },
-    { path: 'orders', component: OrderComponent },
+    { path: 'orders', component: OrderComponent, canActivate: [AuthGuardFn] },
     { path: 'orders/:id', component: DetailOrderComponent },
     // Admin
     { path: 'admin', component: AdminComponent }
