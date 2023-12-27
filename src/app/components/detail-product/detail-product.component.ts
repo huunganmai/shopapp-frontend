@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { ProductImage } from '../../models/product.image';
 import { environment } from '../../environments/environment';
 import { CartService } from '../../services/cart.service';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
     selector: 'app-detail-product',
@@ -17,10 +18,15 @@ export class DetailProductComponent implements OnInit {
     quantity: number = 1;
     isPressedAddToCart: boolean = false;
 
-    constructor(private productService: ProductService, private cartService: CartService) {}
+    constructor(
+        private productService: ProductService,
+        private cartService: CartService,
+        private activateRoute: ActivatedRoute,
+        private router: Router
+    ) {}
 
     ngOnInit() {
-        const idParam = 5;
+        const idParam = this.activateRoute.snapshot.paramMap.get('id');
         if (idParam !== null) {
             this.productId = +idParam;
         }
@@ -79,6 +85,7 @@ export class DetailProductComponent implements OnInit {
         this.isPressedAddToCart = true;
         if (this.product) {
             this.cartService.addToCart(this.product.id, this.quantity);
+            alert('Add product to cart successfully');
         } else {
             console.error('Cannot add product to cart: Product is null');
         }

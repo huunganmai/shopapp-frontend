@@ -4,6 +4,7 @@ import { ProductService } from '../../services/product.service';
 import { environment } from '../../environments/environment';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -22,9 +23,16 @@ export class HomeComponent implements OnInit {
     selectedCategoryId: number = 0;
     categories: Category[] = [];
 
-    constructor(private productService: ProductService, private categoryService: CategoryService) {}
+    constructor(
+        private productService: ProductService,
+        private categoryService: CategoryService,
+        private router: Router
+    ) {
+        debugger;
+    }
 
     ngOnInit() {
+        debugger;
         this.currentPage = Number(localStorage.getItem('currentProductPage')) || 0;
         this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
         this.getCategories(1, 10);
@@ -73,7 +81,10 @@ export class HomeComponent implements OnInit {
         this.getProducts(this.keyword, this.selectedCategoryId, this.currentPage, this.itemsPerPage);
     }
 
-    onProductClick(id: number) {}
+    onProductClick(productId: number) {
+        debugger;
+        this.router.navigate(['/products', productId]);
+    }
 
     searchProducts() {
         this.currentPage = 0;

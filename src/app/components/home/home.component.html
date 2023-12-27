@@ -39,9 +39,10 @@
                     <i class="fa fa-chevron-left"></i>
                 </a>
             </li>
-            <ng-container *ngFor="let page of visiblePages">
-                <li class="page-item" [ngClass]="{'active': page === currentPage + 1}">
-                    <a class="page-link" (click)="onPageChange(page - 1)">{{ page }}</a>
+            <ng-container *ngFor="let page of visiblePages" class="page-item">
+                <li class="page-item">
+                    <a class=" page-link" (click)="onPageChange(page - 1)"
+                        [ngClass]="{'active': page === currentPage + 1}">{{ page }}</a>
                 </li>
             </ng-container>
             <li class="page-item" *ngIf="currentPage < totalPages - 1">
