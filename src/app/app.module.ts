@@ -16,6 +16,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { AdminComponent } from './components/admin/admin.component';
 import { DetailOrderComponent } from './components/detail-order/detail-order.component';
 import { AppComponent } from './app/app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,7 @@ import { AppComponent } from './app/app.component';
         DetailOrderComponent,
         AppComponent
     ],
-    imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule],
+    imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgbModule],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,

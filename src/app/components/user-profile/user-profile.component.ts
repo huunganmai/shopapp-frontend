@@ -81,6 +81,9 @@ export class UserProfileComponent implements OnInit {
             this.userService.updateUser(this.token, updateUserDTO).subscribe({
                 next: (response: any) => {
                     debugger;
+                    this.userService.removeUserResponseFromLocalStorage();
+                    this.tokenService.removeToken();
+                    this.router.navigate(['/login']);
                 },
                 complete: () => {
                     debugger;

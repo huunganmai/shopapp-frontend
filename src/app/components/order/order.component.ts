@@ -7,6 +7,8 @@ import { TokenService } from '../../services/token.service';
 import { CartService } from '../../services/cart.service';
 import { ProductService } from '../../services/product.service';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { OrderResponse } from '../../response/order.response';
 
 @Component({
     selector: 'app-order',
@@ -39,8 +41,10 @@ export class OrderComponent implements OnInit {
         private tokenService: TokenService,
         private cartService: CartService,
         private productService: ProductService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private router: Router
     ) {
+        debugger;
         this.orderForm = this.formBuilder.group({
             fullname: ['', Validators.required],
             email: ['', Validators.email],
@@ -78,6 +82,7 @@ export class OrderComponent implements OnInit {
             },
             complete: () => {
                 debugger;
+                this.calculateTotal();
             },
             error: (error: any) => {
                 debugger;
@@ -89,6 +94,10 @@ export class OrderComponent implements OnInit {
     placeOrder() {
         debugger;
         if (this.orderForm.valid) {
+            if (this.orderData.cart_items.length === 0) {
+                alert('Cart empty');
+                return;
+            }
             this.orderData = {
                 ...this.orderData,
                 ...this.orderForm.value
@@ -98,13 +107,15 @@ export class OrderComponent implements OnInit {
                 quantity: cartItem.quantity
             }));
             this.orderService.placeOrder(this.orderData).subscribe({
-                next: (response: any) => {
+                next: (response: OrderResponse) => {
                     debugger;
                     alert('Đặt hàng thành công');
                     this.cartService.clearCart();
+                    this.router.navigate([`/orders/${response.id}`]);
                 },
                 complete: () => {
                     debugger;
+                    this.calculateTotal();
                 },
                 error: (error: any) => {
                     debugger;

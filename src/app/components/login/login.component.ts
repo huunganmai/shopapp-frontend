@@ -88,6 +88,8 @@ export class LoginComponent implements OnInit {
                             console.error('Cannot fetch user detail: ', error);
                         }
                     });
+                } else {
+                    this.router.navigate(['/']);
                 }
             },
             complete: () => {
