@@ -17,6 +17,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { DetailOrderComponent } from './components/detail-order/detail-order.component';
 import { AppComponent } from './app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderAdminComponent } from './components/admin/order/order.admin.component';
+import { AdminModule } from './components/admin/admin.module';
 
 @NgModule({
     declarations: [
@@ -28,11 +30,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         DetailProductComponent,
         OrderComponent,
         UserProfileComponent,
-        AdminComponent,
         DetailOrderComponent,
         AppComponent
     ],
-    imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgbModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        NgbModule,
+        AdminModule
+    ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
