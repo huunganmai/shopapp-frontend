@@ -1,0 +1,32 @@
+@import '../../../styles/shared-styles.scss';
+
+.container-fluid {
+    height: 90vh !important;
+    background-color: white;
+    padding-left: 0 !important; /* Remove left padding */
+    padding-right: 0 !important; /* Remove right padding */
+}
+ul {
+    list-style: none;
+}
+
+.page-item {
+    cursor: pointer;
+    margin: 1px;
+    border: 1px solid $shopapp-color;
+    border-radius: 5px;
+}
+.page-link {
+    padding: 5px 10px;
+}
+.page-item.active {
+    color: white;
+    background-color: $shopapp-color;
+}
+
+.btn.btn-primary {
+    margin-left: 10px;
+}
+.button-primary {
+    white-space: nowrap;
+}

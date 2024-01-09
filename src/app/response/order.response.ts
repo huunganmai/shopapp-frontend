@@ -8,9 +8,9 @@ export interface OrderResponse {
     phone_number: string;
     address: string;
     note: string;
+    total_money: number;
     order_date: Date;
     status: string;
-    total_money: number;
     shipping_method: string;
     shipping_address: string;
     shipping_date: Date;
