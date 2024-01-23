@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 center">
+            <h3>Insert Product</h3>
+            <form (ngSubmit)="insertProduct()" enctype="multipart/form-data">
+                <div class="from-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" [(ngModel)]="insertProductDTO.name" required
+                        class="form-control mb-3">
+                </div>
+                <div class="from-group">
+                    <label for="price">Price:</label>
+                    <input type="text" id="price" name="price" [(ngModel)]="insertProductDTO.price" required
+                        class="form-control mb-3">
+                </div>
+                <div class="from-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" [(ngModel)]="insertProductDTO.description"
+                        required class="form-control mb-3">
+                </div>
+                <div class="from-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" [(ngModel)]="insertProductDTO.category_id" required
+                        class="form-control mb-3">
+                        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+                    </select>
+                </div>
+                <div class="from-group row">
+                    <label for="images">Images (up to 5):</label>
+                    <input type="file" id="images" name="images" (change)="onFileChange($event)" multiple
+                        accept="image/*" class="mb-3">
+                    <!-- <img *ngFor="let image of insertProductDTO.images" src="{{}}"> -->
+                </div>
+                <button type="submit" class="btn btn-primary">Insert</button>
+            </form>
+        </div>
+    </div>
+</div>
