@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
             next: (response: any) => {
                 debugger;
                 response.products.forEach((product: Product) => {
-                    product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+                    product.url = `${environment.apiBaseUrl}/product_images/${product.thumbnail}`;
                 });
                 this.products = response.products;
                 this.totalPages = response.totalPages;

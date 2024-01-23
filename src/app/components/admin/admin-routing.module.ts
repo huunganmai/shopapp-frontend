@@ -9,6 +9,7 @@ import { UpdateCategoryAdminComponent } from './category/update/update.category.
 import { InsertCategoryAdminComponent } from './category/insert/insert.category.admin.component';
 import { NgModule } from '@angular/core';
 import { TestComponent } from './test/test.component';
+import { InsertProductAdminComponent } from './product/insert/insert.product.admin.component';
 
 const routes: Routes = [
     {
@@ -36,8 +37,8 @@ const routes: Routes = [
                 component: UpdateProductAdminComponent
             },
             {
-                path: 'product/insert',
-                component: OrderAdminComponent
+                path: 'products/insert',
+                component: InsertProductAdminComponent
             },
             {
                 path: 'categories/update/:id',

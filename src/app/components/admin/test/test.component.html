@@ -1,0 +1,12 @@
+<div [ngClass]="{'active': activeItem === 1}" (click)="onItemClick(1)" class="d-flex">
+    <div class="block-a">
+        <p class="button mb-10">content1</p>
+        <p class="button">content2</p>
+    </div>
+    <div class="block-b">
+        <p class="button">content3</p>
+    </div>
+</div>
+<div [ngClass]="{'active': activeItem === 2}" (click)="onItemClick(2)">
+    Item 1
+</div>

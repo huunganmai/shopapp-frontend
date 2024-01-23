@@ -72,7 +72,7 @@ export class OrderComponent implements OnInit {
                     debugger;
                     const product = products.find(product => product.id === productId);
                     if (product) {
-                        product.thumbnail = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
+                        product.thumbnail = `${environment.apiBaseUrl}/product_images/${product.thumbnail}`;
                     }
                     return {
                         product: product!,
