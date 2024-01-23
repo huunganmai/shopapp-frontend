@@ -11,17 +11,12 @@ import { TokenService } from './token.service';
     providedIn: 'root'
 })
 export class OrderService {
-    private token = this.tokenService.getToken();
     private orderApi = `${environment.apiBaseUrl}/orders`;
-    private apiConfig = {
-        headers: this.httpUtilService.createHeaders()
+    private apiAuthConfig = {
+        headers: this.httpUtilService.createHeaders('vi')
     };
 
-    constructor(
-        private http: HttpClient,
-        private httpUtilService: HttpUtilService,
-        private tokenService: TokenService
-    ) {}
+    constructor(private http: HttpClient, private httpUtilService: HttpUtilService) {}
 
     placeOrder(orderData: OrderDTO): Observable<OrderResponse> {
         return this.http.post<OrderResponse>(this.orderApi, orderData);
@@ -32,16 +27,13 @@ export class OrderService {
     }
 
     getOrderByKeyword(keyword: string, page: number, limit: number): Observable<OrderResponse[]> {
-        const newHeader = this.apiConfig;
-        newHeader.headers.set('Authorization', `Bearer ${this.token}`);
-
         const params = new HttpParams()
             .set('keyword', keyword)
             .set('page', page.toString())
             .set('limit', limit.toString());
 
         const options = {
-            headers: newHeader.headers,
+            headers: this.apiAuthConfig.headers,
             params: params
         };
 
@@ -50,10 +42,7 @@ export class OrderService {
 
     deleteOrderById(id: number): Observable<any> {
         debugger;
-        const newHeader = this.apiConfig;
-        newHeader.headers.set('Authorization', `Bearer ${this.token}`);
-
-        return this.http.delete(`${this.orderApi}/${id}`, newHeader);
+        return this.http.delete(`${this.orderApi}/${id}`, this.apiAuthConfig);
     }
 
     updateOrder(id: number, orderData: OrderDTO): Observable<any> {

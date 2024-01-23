@@ -13,8 +13,8 @@ import { UpdateCategoryDTO } from '../dtos/category/update.category.dto';
 })
 export class CategoryService {
     private apiCategory = `${environment.apiBaseUrl}/categories`;
-    private apiConfig = {
-        headers: this.httpUtilService.createHeaders()
+    private apiAuthConfig = {
+        headers: this.httpUtilService.createHeaders('vi')
     };
     private token = this.tokenService.getToken();
 
@@ -23,12 +23,6 @@ export class CategoryService {
         private httpUtilService: HttpUtilService,
         private tokenService: TokenService
     ) {}
-
-    createHeader() {
-        const header = this.apiConfig;
-        header.headers.set('Authorization', `Bearer ${this.token}`);
-        return header;
-    }
 
     getCategories(page: number, limit: number): Observable<Category[]> {
         const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
@@ -40,14 +34,14 @@ export class CategoryService {
     }
 
     insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<any> {
-        return this.http.post(this.apiCategory, insertCategoryDTO, this.createHeader());
+        return this.http.post(this.apiCategory, insertCategoryDTO, this.apiAuthConfig);
     }
 
     updateCategory(id: number, updateCategoryDTO: UpdateCategoryDTO) {
-        return this.http.put(`${this.apiCategory}/${id}`, updateCategoryDTO, this.createHeader());
+        return this.http.put(`${this.apiCategory}/${id}`, updateCategoryDTO, this.apiAuthConfig);
     }
 
     deleteCategory(id: number) {
-        return this.http.delete(`${this.apiCategory}/${id}`, this.createHeader());
+        return this.http.delete(`${this.apiCategory}/${id}`, this.apiAuthConfig);
     }
 }

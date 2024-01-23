@@ -18,7 +18,7 @@ export class UserService {
     private apiUserDetail = `${environment.apiBaseUrl}/users/details`;
 
     private apiConfig = {
-        headers: this.httpUtilService.createHeaders()
+        headers: this.httpUtilService.createHeaders('vi')
     };
 
     token = this.tokenService.getToken();
@@ -38,9 +38,7 @@ export class UserService {
     }
 
     getUserDetail(token: string) {
-        let newHeader = this.apiConfig;
-        newHeader.headers.set('Authorization', `Bearer ${this.token}`);
-        return this.http.post(this.apiUserDetail, newHeader);
+        return this.http.post(this.apiUserDetail, this.apiConfig);
     }
 
     updateUser(token: string, updatedUserDTO: UpdateUserDTO) {

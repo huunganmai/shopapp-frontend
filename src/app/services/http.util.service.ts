@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
+import { TokenService } from './token.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpUtilService {
-    createHeaders(): HttpHeaders {
+    constructor(private tokenService: TokenService) {}
+
+    createHeaders(acceptLanguage: string): HttpHeaders {
         return new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Accept-Language': 'vi'
+            'Accept-Language': acceptLanguage
         });
     }
 }
