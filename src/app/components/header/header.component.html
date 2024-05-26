@@ -42,7 +42,12 @@
                             </ng-container>
                         </ng-container>
                         <ng-container *ngIf="!userResponse">
-                            <a class="nav-link" routerLink="/login">Đăng nhập</a>
+                            <div class="no-user">
+                                <a class="nav-link " (click)="setActiveNavItem(3)"
+                                    [ngClass]="{ 'active': activeNavItem === 3 }" routerLink="/login">Đăng nhập</a>
+                                <a class="nav-link" (click)="setActiveNavItem(4)"
+                                    [ngClass]="{ 'active': activeNavItem === 4 }" routerLink="/register">Đăng kí</a>
+                            </div>
                         </ng-container>
                     </li>
                 </ul>

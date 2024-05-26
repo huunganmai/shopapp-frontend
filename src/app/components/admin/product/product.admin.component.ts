@@ -3,6 +3,7 @@ import { Product } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { ApiResponse } from '../../../response/api.response';
 
 @Component({
     selector: 'app-product',
@@ -29,15 +30,15 @@ export class ProductAdminComponent implements OnInit {
 
     getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
         this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                response.products.forEach((product: Product) => {
+                response.data.products.forEach((product: Product) => {
                     if (product) {
                         product.url = `${environment.apiBaseUrl}/product_images/${product.thumbnail}`;
                     }
                 });
-                this.products = response.products;
-                this.totalPages = response.totalPages;
+                this.products = response.data.products;
+                this.totalPages = response.data.totalPages;
                 this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
             },
             complete: () => {

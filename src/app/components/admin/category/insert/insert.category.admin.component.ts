@@ -20,7 +20,7 @@ export class InsertCategoryAdminComponent implements OnInit {
     insertCategory(insertCategoryDTO: InsertCategoryDTO) {
         debugger;
         this.categoryService.insertCategory(insertCategoryDTO).subscribe({
-            next: (response: any) => {
+            next: response => {
                 debugger;
                 this.router.navigate(['/admin/categories']);
             },

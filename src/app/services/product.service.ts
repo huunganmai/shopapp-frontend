@@ -7,6 +7,7 @@ import { HttpUtilService } from './http.util.service';
 import { TokenService } from './token.service';
 import { InsertProductDTO } from '../dtos/products/insert.product.dto';
 import { UpdateProductDTO } from '../dtos/products/update.product.dto';
+import { ApiResponse } from '../response/api.response';
 
 @Injectable({
     providedIn: 'root'
@@ -19,34 +20,34 @@ export class ProductService {
 
     constructor(private http: HttpClient, private httpUtilService: HttpUtilService) {}
 
-    getProducts(keyword: string, categoryId: number, page: number, limit: number): Observable<Product[]> {
+    getProducts(keyword: string, categoryId: number, page: number, limit: number): Observable<ApiResponse> {
         const params = new HttpParams()
             .set('keyword', keyword)
             .set('category_id', categoryId.toString())
             .set('page', page.toString())
             .set('limit', limit.toString());
-        return this.http.get<Product[]>(this.apiProduct, { params });
+        return this.http.get<ApiResponse>(this.apiProduct, { params });
     }
 
     getDetailProducts(productId: number) {
-        return this.http.get<Product>(`${this.apiProduct}/${productId}`);
+        return this.http.get<ApiResponse>(`${this.apiProduct}/${productId}`);
     }
 
-    getProductByIds(productIds: number[]): Observable<Product[]> {
+    getProductByIds(productIds: number[]): Observable<ApiResponse> {
         const ids = productIds.join(',');
         const params = new HttpParams().set('ids', ids);
-        return this.http.get<Product[]>(`${this.apiProduct}/by-ids`, { params });
+        return this.http.get<ApiResponse>(`${this.apiProduct}/by-ids`, { params });
     }
 
     insertProduct(insertProductDTO: InsertProductDTO) {
-        return this.http.post(this.apiProduct, insertProductDTO, this.apiConfig);
+        return this.http.post<ApiResponse>(this.apiProduct, insertProductDTO, this.apiConfig);
     }
 
-    updateProduct(productId: number, updateProductDTO: UpdateProductDTO): Observable<UpdateProductDTO> {
-        return this.http.put<Product>(`${this.apiProduct}/${productId}`, updateProductDTO);
+    updateProduct(productId: number, updateProductDTO: UpdateProductDTO): Observable<ApiResponse> {
+        return this.http.put<ApiResponse>(`${this.apiProduct}/${productId}`, updateProductDTO);
     }
 
-    uploadImage(productId: number, images: File[]): Observable<any> {
+    uploadImage(productId: number, images: File[]): Observable<ApiResponse> {
         debugger;
         const formData = new FormData();
         for (let i = 0; i < images.length; i++) {
@@ -55,14 +56,18 @@ export class ProductService {
         const newHeader = {
             headers: this.httpUtilService.createHeaders('vi')
         };
-        return this.http.post(`${environment.apiBaseUrl}/product_images/uploads/${productId}`, formData, newHeader);
+        return this.http.post<ApiResponse>(
+            `${environment.apiBaseUrl}/product_images/uploads/${productId}`,
+            formData,
+            newHeader
+        );
     }
 
-    deleteProductById(productId: number) {
-        return this.http.delete(`${this.apiProduct}/${productId}`, this.apiConfig);
+    deleteProductById(productId: number): Observable<ApiResponse> {
+        return this.http.delete<ApiResponse>(`${this.apiProduct}/${productId}`, this.apiConfig);
     }
 
-    deleteProductImage(productImageId: number): Observable<any> {
-        return this.http.delete<string>(`${environment.apiBaseUrl}/product_images/${productImageId}`);
+    deleteProductImage(productImageId: number): Observable<ApiResponse> {
+        return this.http.delete<ApiResponse>(`${environment.apiBaseUrl}/product_images/${productImageId}`);
     }
 }

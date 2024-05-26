@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ApiResponse } from '../../response/api.response';
 
 @Component({
     selector: 'app-register',
@@ -59,9 +60,9 @@ export class RegisterComponent {
         };
 
         this.userService.register(registerDTO).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                if (response && (response.status === 200 || response.status === 201)) {
+                if (response && (response.status === '200' || response.status === '201')) {
                     this.router.navigate(['/login']);
                 } else {
                     // Handle error

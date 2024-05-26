@@ -5,6 +5,7 @@ import { ProductImage } from '../../models/product.image';
 import { environment } from '../../environments/environment';
 import { CartService } from '../../services/cart.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ApiResponse } from '../../response/api.response';
 
 @Component({
     selector: 'app-detail-product',
@@ -32,15 +33,15 @@ export class DetailProductComponent implements OnInit {
         }
         if (!isNaN(this.productId)) {
             this.productService.getDetailProducts(this.productId).subscribe({
-                next: (response: any) => {
+                next: (response: ApiResponse) => {
                     debugger;
-                    if (response.product_images && response.product_images.length > 0) {
-                        response.product_images.forEach((product_image: ProductImage) => {
+                    if (response.data.product_images && response.data.product_images.length > 0) {
+                        response.data.product_images.forEach((product_image: ProductImage) => {
                             product_image.image_url = `${environment.apiBaseUrl}/product_images/${product_image.image_url}`;
                         });
                     }
                     debugger;
-                    this.product = response;
+                    this.product = response.data;
                     this.showImage(0);
                 },
                 complete: () => {
@@ -110,7 +111,7 @@ export class DetailProductComponent implements OnInit {
 
     buyNow(): void {
         if (this.isPressedAddToCart) {
-            this.addToCart();
+            this.router.navigate(['/orders']);
         }
     }
 }

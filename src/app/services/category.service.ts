@@ -7,6 +7,7 @@ import { InsertCategoryDTO } from '../dtos/category/insert.category.dto';
 import { HttpUtilService } from './http.util.service';
 import { TokenService } from './token.service';
 import { UpdateCategoryDTO } from '../dtos/category/update.category.dto';
+import { ApiResponse } from '../response/api.response';
 
 @Injectable({
     providedIn: 'root'
@@ -24,24 +25,24 @@ export class CategoryService {
         private tokenService: TokenService
     ) {}
 
-    getCategories(page: number, limit: number): Observable<Category[]> {
+    getCategories(page: number, limit: number): Observable<ApiResponse> {
         const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
-        return this.http.get<Category[]>(this.apiCategory, { params });
+        return this.http.get<ApiResponse>(this.apiCategory, { params });
     }
 
-    getDetailCategory(id: number): Observable<Category> {
-        return this.http.get<Category>(`${this.apiCategory}/${id}`);
+    getDetailCategory(id: number): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(`${this.apiCategory}/${id}`);
     }
 
-    insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<any> {
-        return this.http.post(this.apiCategory, insertCategoryDTO, this.apiAuthConfig);
+    insertCategory(insertCategoryDTO: InsertCategoryDTO): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.apiCategory, insertCategoryDTO, this.apiAuthConfig);
     }
 
     updateCategory(id: number, updateCategoryDTO: UpdateCategoryDTO) {
-        return this.http.put(`${this.apiCategory}/${id}`, updateCategoryDTO, this.apiAuthConfig);
+        return this.http.put<ApiResponse>(`${this.apiCategory}/${id}`, updateCategoryDTO, this.apiAuthConfig);
     }
 
     deleteCategory(id: number) {
-        return this.http.delete(`${this.apiCategory}/${id}`, this.apiAuthConfig);
+        return this.http.delete<ApiResponse>(`${this.apiCategory}/${id}`, this.apiAuthConfig);
     }
 }

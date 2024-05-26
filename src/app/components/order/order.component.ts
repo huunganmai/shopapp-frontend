@@ -9,6 +9,7 @@ import { ProductService } from '../../services/product.service';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { OrderResponse } from '../../response/order.response';
+import { ApiResponse } from '../../response/api.response';
 
 @Component({
     selector: 'app-order',
@@ -67,10 +68,10 @@ export class OrderComponent implements OnInit {
         }
 
         this.productService.getProductByIds(productIds).subscribe({
-            next: products => {
+            next: (response: ApiResponse) => {
                 this.cartItems = productIds.map(productId => {
                     debugger;
-                    const product = products.find(product => product.id === productId);
+                    const product = response.data.find((product: any) => product.id === productId);
                     if (product) {
                         product.thumbnail = `${environment.apiBaseUrl}/product_images/${product.thumbnail}`;
                     }
@@ -94,10 +95,6 @@ export class OrderComponent implements OnInit {
     placeOrder() {
         debugger;
         if (this.orderForm.valid) {
-            if (this.orderData.cart_items.length === 0) {
-                alert('Cart empty');
-                return;
-            }
             this.orderData = {
                 ...this.orderData,
                 ...this.orderForm.value
@@ -106,12 +103,16 @@ export class OrderComponent implements OnInit {
                 product_id: cartItem.product.id,
                 quantity: cartItem.quantity
             }));
+            if (this.orderData.cart_items.length === 0) {
+                alert('Cart empty');
+                return;
+            }
             this.orderService.placeOrder(this.orderData).subscribe({
-                next: (response: OrderResponse) => {
+                next: (response: ApiResponse) => {
                     debugger;
                     alert('Đặt hàng thành công');
                     this.cartService.clearCart();
-                    this.router.navigate([`/orders/${response.id}`]);
+                    this.router.navigate([`/orders/${response.data.id}`]);
                 },
                 complete: () => {
                     debugger;

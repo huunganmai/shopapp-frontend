@@ -4,6 +4,7 @@ import { OrderService } from '../../../services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { OrderDTO } from '../../../dtos/order/order.dto';
+import { ApiResponse } from '../../../response/api.response';
 
 @Component({
     selector: 'app-detail-order',
@@ -41,39 +42,39 @@ export class DetailOrderAdminComponent implements OnInit {
         debugger;
         this.orderId = Number(this.route.snapshot.paramMap.get('id'));
         this.orderService.getOrderById(this.orderId).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.orderResponse.id = response.id;
-                this.orderResponse.user_id = response.user_id;
-                this.orderResponse.fullname = response.fullname;
-                this.orderResponse.email = response.email;
-                this.orderResponse.phone_number = response.phone_number;
-                this.orderResponse.address = response.address;
-                this.orderResponse.note = response.note;
-                this.orderResponse.total_money = response.total_money;
-                if (response.order_date) {
+                this.orderResponse.id = response.data.id;
+                this.orderResponse.user_id = response.data.user_id;
+                this.orderResponse.fullname = response.data.fullname;
+                this.orderResponse.email = response.data.email;
+                this.orderResponse.phone_number = response.data.phone_number;
+                this.orderResponse.address = response.data.address;
+                this.orderResponse.note = response.data.note;
+                this.orderResponse.total_money = response.data.total_money;
+                if (response.data.order_date) {
                     this.orderResponse.order_date = new Date(
-                        response.order_date[0],
-                        response.order_date[1] - 1,
-                        response.order_date[2]
+                        response.data.order_date[0],
+                        response.data.order_date[1] - 1,
+                        response.data.order_date[2]
                     );
                 }
-                this.orderResponse.order_details = response.order_details.map((order_detail: any) => {
+                this.orderResponse.order_details = response.data.order_details.map((order_detail: any) => {
                     order_detail.product.thumbnail = `${environment.apiBaseUrl}/product_images/${order_detail.product.thumbnail}`;
                     order_detail.number_of_products = order_detail.numberOfProducts;
                     //order_detail.total_money = order_detail.totalMoney
                     return order_detail;
                 });
-                this.orderResponse.payment_method = response.payment_method;
-                if (response.shipping_date) {
+                this.orderResponse.payment_method = response.data.payment_method;
+                if (response.data.shipping_date) {
                     this.orderResponse.shipping_date = new Date(
-                        response.shipping_date[0],
-                        response.shipping_date[1] - 1,
-                        response.shipping_date[2]
+                        response.data.shipping_date[0],
+                        response.data.shipping_date[1] - 1,
+                        response.data.shipping_date[2]
                     );
                 }
-                this.orderResponse.shipping_method = response.shipping_method;
-                this.orderResponse.status = response.status;
+                this.orderResponse.shipping_method = response.data.shipping_method;
+                this.orderResponse.status = response.data.status;
                 debugger;
             },
             complete: () => {

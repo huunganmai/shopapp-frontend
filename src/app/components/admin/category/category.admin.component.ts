@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
 import { Router } from '@angular/router';
+import { ApiResponse } from '../../../response/api.response';
 
 @Component({
     selector: 'app-category',
@@ -22,9 +23,9 @@ export class CategoryAdminComponent implements OnInit {
 
     getCategories(page: number, limit: number) {
         this.categoryService.getCategories(page, limit).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.categories = response;
+                this.categories = response.data;
             },
             complete: () => {
                 debugger;
@@ -49,7 +50,7 @@ export class CategoryAdminComponent implements OnInit {
     deleteCategory(id: number) {
         debugger;
         this.categoryService.deleteCategory(id).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
                 alert('Xóa thành công');
                 location.reload();

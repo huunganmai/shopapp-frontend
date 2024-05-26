@@ -4,6 +4,7 @@ import { Category } from '../../../../models/category';
 import { CategoryService } from '../../../../services/category.service';
 import { ProductService } from '../../../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiResponse } from '../../../../response/api.response';
 
 @Component({
     selector: 'app-insert.product.admin',
@@ -35,9 +36,9 @@ export class InsertProductAdminComponent implements OnInit {
     getCategories(page: number, limit: number) {
         debugger;
         this.categoryService.getCategories(page, limit).subscribe({
-            next: (response: Category[]) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.categories = response;
+                this.categories = response.data;
             },
             complete: () => {
                 debugger;
@@ -61,10 +62,10 @@ export class InsertProductAdminComponent implements OnInit {
     insertProduct() {
         debugger;
         this.productService.insertProduct(this.insertProductDTO).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
                 if (this.insertProductDTO.images.length > 0) {
-                    this.productService.uploadImage(response.id, this.insertProductDTO.images).subscribe({
+                    this.productService.uploadImage(response.data.id, this.insertProductDTO.images).subscribe({
                         next: (response: any) => {
                             debugger;
                             this.router.navigate(['..'], { relativeTo: this.route });

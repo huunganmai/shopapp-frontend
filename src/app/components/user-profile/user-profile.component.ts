@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { TokenService } from '../../services/token.service';
 import { UserResponse } from '../../response/user.response';
 import { UpdateUserDTO } from '../../dtos/user/update.user.dto';
+import { ApiResponse } from '../../response/api.response';
 
 @Component({
     selector: 'app-user-profile',
@@ -42,17 +43,17 @@ export class UserProfileComponent implements OnInit {
         debugger;
         this.token = this.tokenService.getToken();
         this.userService.getUserDetail(this.token).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
                 this.userResponse = {
-                    ...response,
-                    date_of_birth: new Date(response.date_of_birth)
+                    ...response.data,
+                    date_of_birth: new Date(response.data.date_of_birth)
                 };
                 this.userProfileForm.patchValue({
-                    fullname: response.fullname,
-                    phone_number: response.phone_number,
-                    address: response.address,
-                    date_of_birth: response.date_of_birth
+                    fullname: response.data.fullname,
+                    phone_number: response.data.phone_number,
+                    address: response.data.address,
+                    date_of_birth: response.data.date_of_birth
                 });
             },
             complete: () => {

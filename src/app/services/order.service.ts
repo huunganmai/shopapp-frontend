@@ -6,6 +6,7 @@ import { HttpUtilService } from './http.util.service';
 import { Observable } from 'rxjs';
 import { OrderResponse } from '../response/order.response';
 import { TokenService } from './token.service';
+import { ApiResponse } from '../response/api.response';
 
 @Injectable({
     providedIn: 'root'
@@ -18,15 +19,15 @@ export class OrderService {
 
     constructor(private http: HttpClient, private httpUtilService: HttpUtilService) {}
 
-    placeOrder(orderData: OrderDTO): Observable<OrderResponse> {
-        return this.http.post<OrderResponse>(this.orderApi, orderData);
+    placeOrder(orderData: OrderDTO): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.orderApi, orderData);
     }
 
-    getOrderById(orderId: number): Observable<any> {
-        return this.http.get(`${this.orderApi}/${orderId}`);
+    getOrderById(orderId: number): Observable<ApiResponse> {
+        return this.http.get<ApiResponse>(`${this.orderApi}/${orderId}`);
     }
 
-    getOrderByKeyword(keyword: string, page: number, limit: number): Observable<OrderResponse[]> {
+    getOrderByKeyword(keyword: string, page: number, limit: number): Observable<ApiResponse> {
         const params = new HttpParams()
             .set('keyword', keyword)
             .set('page', page.toString())
@@ -37,15 +38,15 @@ export class OrderService {
             params: params
         };
 
-        return this.http.get<OrderResponse[]>(`${this.orderApi}/get-orders-by-keyword`, options);
+        return this.http.get<ApiResponse>(`${this.orderApi}/get-orders-by-keyword`, options);
     }
 
-    deleteOrderById(id: number): Observable<any> {
+    deleteOrderById(id: number): Observable<ApiResponse> {
         debugger;
-        return this.http.delete(`${this.orderApi}/${id}`, this.apiAuthConfig);
+        return this.http.delete<ApiResponse>(`${this.orderApi}/${id}`, this.apiAuthConfig);
     }
 
-    updateOrder(id: number, orderData: OrderDTO): Observable<any> {
-        return this.http.put(`${this.orderApi}/${id}`, orderData);
+    updateOrder(id: number, orderData: OrderDTO): Observable<ApiResponse> {
+        return this.http.put<ApiResponse>(`${this.orderApi}/${id}`, orderData);
     }
 }

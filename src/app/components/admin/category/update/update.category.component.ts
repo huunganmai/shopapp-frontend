@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UpdateCategoryDTO } from '../../../../dtos/category/update.category.dto';
+import { ApiResponse } from '../../../../response/api.response';
 
 @Component({
     selector: 'app-update.category.admin',
@@ -24,9 +25,9 @@ export class UpdateCategoryAdminComponent implements OnInit {
 
     getDetailCategory(categoryId: number) {
         this.categoryService.getDetailCategory(categoryId).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.updateCategoryDTO.name = response.name;
+                this.updateCategoryDTO.name = response.data.name;
             },
             complete: () => {
                 debugger;

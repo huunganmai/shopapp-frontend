@@ -7,6 +7,8 @@ import { TokenService } from '../../services/token.service';
 import { RoleService } from '../../services/role.service';
 import { Role } from '../../models/role';
 import { UserResponse } from '../../response/user.response';
+import { ApiResponse } from '../../response/api.response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-login',
@@ -35,10 +37,10 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         debugger;
         this.roleService.getRoles().subscribe({
-            next: (roles: Role[]) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.roles = roles;
-                this.selectedRole = roles.length > 0 ? roles[0] : undefined;
+                this.roles = response.data;
+                this.selectedRole = response.data.length > 0 ? response.data[0] : undefined;
             },
             complete: () => {
                 debugger;
@@ -59,18 +61,18 @@ export class LoginComponent implements OnInit {
         };
 
         this.userService.login(loginDTO).subscribe({
-            next: (response: LoginResponse) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                const { token } = response;
+                const { token } = response.data;
                 if (this.rememberLogin) {
                     this.tokenService.setToken(token);
                     debugger;
                     this.userService.getUserDetail(token).subscribe({
-                        next: (response: any) => {
+                        next: (response: ApiResponse) => {
                             debugger;
                             this.userResponse = {
-                                ...response,
-                                date_of_birth: new Date(response.date_of_birth)
+                                ...response.data,
+                                date_of_birth: new Date(response.data.date_of_birth)
                             };
                             this.userService.saveUserResponseToLocalStorage(this.userResponse);
 
@@ -83,7 +85,7 @@ export class LoginComponent implements OnInit {
                         complete: () => {
                             debugger;
                         },
-                        error: (error: any) => {
+                        error: (error: HttpErrorResponse) => {
                             debugger;
                             console.error('Cannot fetch user detail: ', error);
                         }

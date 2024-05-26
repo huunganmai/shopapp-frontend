@@ -30,6 +30,12 @@ export class HeaderComponent implements OnInit {
             case '/notifications':
                 this.activeNavItem = 2;
                 break;
+            case '/login':
+                this.activeNavItem = 3;
+                break;
+            case '/register':
+                this.activeNavItem = 4;
+                break;
             default:
                 this.activeNavItem = 0;
         }

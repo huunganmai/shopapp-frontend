@@ -5,6 +5,8 @@ import { environment } from '../../environments/environment';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { Router } from '@angular/router';
+import { ApiResponse } from '../../response/api.response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-home',
@@ -40,13 +42,13 @@ export class HomeComponent implements OnInit {
 
     getProducts(keyword: string, selectedCategoryId: number, page: number, limit: number) {
         this.productService.getProducts(keyword, selectedCategoryId, page, limit).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                response.products.forEach((product: Product) => {
+                response.data.products.forEach((product: Product) => {
                     product.url = `${environment.apiBaseUrl}/product_images/${product.thumbnail}`;
                 });
-                this.products = response.products;
-                this.totalPages = response.totalPages;
+                this.products = response.data.products;
+                this.totalPages = response.data.totalPages;
                 this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
             },
             complete: () => {
@@ -61,15 +63,15 @@ export class HomeComponent implements OnInit {
 
     getCategories(page: number, limit: number) {
         this.categoryService.getCategories(page, limit).subscribe({
-            next: (response: Category[]) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.categories = response;
+                this.categories = response.data;
             },
             complete: () => {
                 debugger;
             },
-            error: (error: any) => {
-                console.error('Error fetching categories: ', error);
+            error: (error: HttpErrorResponse) => {
+                console.error(error?.error?.message ?? '');
             }
         });
     }

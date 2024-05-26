@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderResponse } from '../../../response/order.response';
 import { OrderService } from '../../../services/order.service';
 import { Router } from '@angular/router';
+import { ApiResponse } from '../../../response/api.response';
 
 @Component({
     selector: 'app-order.admin',
@@ -35,10 +36,10 @@ export class OrderAdminComponent implements OnInit {
     getAllOrder(keyword: string, page: number, limit: number) {
         debugger;
         this.orderService.getOrderByKeyword(keyword, page, limit).subscribe({
-            next: (response: any) => {
+            next: (response: ApiResponse) => {
                 debugger;
-                this.orders = response.orderResponses;
-                this.totalPages = response.totalPages;
+                this.orders = response.data.orderResponses;
+                this.totalPages = response.data.totalPages;
                 this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
             },
             complete: () => {

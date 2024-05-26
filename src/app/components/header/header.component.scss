@@ -57,3 +57,8 @@ div.popover-body {
     background-color: $shopapp-color;
     color: white;
 }
+
+.no-user {
+    display: flex;
+    flex-direction: row;
+}

@@ -8,6 +8,7 @@ import { HttpUtilService } from './http.util.service';
 import { TokenService } from './token.service';
 import { UserResponse } from '../response/user.response';
 import { UpdateUserDTO } from '../dtos/user/update.user.dto';
+import { ApiResponse } from '../response/api.response';
 
 @Injectable({
     providedIn: 'root'
@@ -29,27 +30,28 @@ export class UserService {
         private tokenService: TokenService
     ) {}
 
-    register(registerDTO: RegisterDTO): Observable<any> {
-        return this.http.post(this.apiRegister, registerDTO, this.apiConfig);
+    register(registerDTO: RegisterDTO): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.apiRegister, registerDTO, this.apiConfig);
     }
 
-    login(loginDTO: LoginDTO): Observable<any> {
-        return this.http.post(this.apiLogin, loginDTO, this.apiConfig);
+    login(loginDTO: LoginDTO): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.apiLogin, loginDTO, this.apiConfig);
     }
 
-    getUserDetail(token: string) {
-        return this.http.post(this.apiUserDetail, this.apiConfig);
+    getUserDetail(token: string): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(this.apiUserDetail, this.apiConfig);
     }
 
-    updateUser(token: string, updatedUserDTO: UpdateUserDTO) {
+    updateUser(token: string, updatedUserDTO: UpdateUserDTO): Observable<ApiResponse> {
         let newHeader = this.apiConfig;
         newHeader.headers.set('Authorization', `Bearer ${this.token}`);
         const id = this.tokenService.getUserId();
-        return this.http.put(`${this.apiUserDetail}/${id}`, updatedUserDTO, newHeader);
+        return this.http.put<ApiResponse>(`${this.apiUserDetail}/${id}`, updatedUserDTO, newHeader);
     }
 
     saveUserResponseToLocalStorage(userResponse?: UserResponse) {
         try {
+            debugger;
             if (!userResponse) {
                 return;
             }
