@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         debugger;
-        this.userResponse = this.userService.getUserResponseFromLocalStorage();
+        this.userResponse = this.userService.getUserResponseFromStorage();
         const url = this.router.url;
         switch (url) {
             case '/':
@@ -56,10 +56,10 @@ export class HeaderComponent implements OnInit {
             debugger;
             this.router.navigate(['/user-profile']);
         } else if (index === 2) {
-            this.userService.removeUserResponseFromLocalStorage();
+            this.userService.removeUserResponseFromStorage();
             this.tokenService.removeToken();
-            this.userService.getUserResponseFromLocalStorage();
-            this.userResponse = this.userService.getUserResponseFromLocalStorage();
+            this.userService.getUserResponseFromStorage();
+            this.userResponse = this.userService.getUserResponseFromStorage();
         }
         this.isPopoverOpen = false;
     }

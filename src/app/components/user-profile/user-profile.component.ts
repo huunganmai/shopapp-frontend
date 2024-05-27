@@ -82,7 +82,7 @@ export class UserProfileComponent implements OnInit {
             this.userService.updateUser(this.token, updateUserDTO).subscribe({
                 next: (response: any) => {
                     debugger;
-                    this.userService.removeUserResponseFromLocalStorage();
+                    this.userService.removeUserResponseFromStorage();
                     this.tokenService.removeToken();
                     this.router.navigate(['/login']);
                 },

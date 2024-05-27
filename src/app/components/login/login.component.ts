@@ -65,34 +65,40 @@ export class LoginComponent implements OnInit {
                 debugger;
                 const { token } = response.data;
                 if (this.rememberLogin) {
-                    this.tokenService.setToken(token);
-                    debugger;
-                    this.userService.getUserDetail(token).subscribe({
-                        next: (response: ApiResponse) => {
-                            debugger;
-                            this.userResponse = {
-                                ...response.data,
-                                date_of_birth: new Date(response.data.date_of_birth)
-                            };
-                            this.userService.saveUserResponseToLocalStorage(this.userResponse);
-
-                            if (this.userResponse?.role.name == 'admin') {
-                                this.router.navigate(['/admin']);
-                            } else if (this.userResponse?.role.name == 'user') {
-                                this.router.navigate(['/']);
-                            }
-                        },
-                        complete: () => {
-                            debugger;
-                        },
-                        error: (error: HttpErrorResponse) => {
-                            debugger;
-                            console.error('Cannot fetch user detail: ', error);
-                        }
-                    });
+                    this.tokenService.setTokenToLocalStorage(token);
                 } else {
-                    this.router.navigate(['/']);
+                    this.tokenService.setTokenToSessionStorage(token);
                 }
+
+                this.userService.getUserDetail(token).subscribe({
+                    next: (response: ApiResponse) => {
+                        debugger;
+                        this.userResponse = {
+                            ...response.data,
+                            date_of_birth: new Date(response.data.date_of_birth)
+                        };
+
+                        if (this.rememberLogin) {
+                            debugger;
+                            this.userService.saveUserResponseToLocalStorage(this.userResponse);
+                        } else {
+                            this.userService.saveUserResponseToSessionStorage(this.userResponse);
+                        }
+
+                        if (this.userResponse?.role.name == 'admin') {
+                            this.router.navigate(['/admin']);
+                        } else if (this.userResponse?.role.name == 'user') {
+                            this.router.navigate(['/']);
+                        }
+                    },
+                    complete: () => {
+                        debugger;
+                    },
+                    error: (error: HttpErrorResponse) => {
+                        debugger;
+                        console.error('Cannot fetch user detail: ', error);
+                    }
+                });
             },
             complete: () => {
                 debugger;

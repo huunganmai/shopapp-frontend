@@ -10,15 +10,21 @@ export class TokenService {
     constructor() {}
 
     getToken(): string {
-        return localStorage.getItem(this.TOKEN_KEY) ?? '';
+        debugger;
+        return localStorage.getItem(this.TOKEN_KEY) ?? sessionStorage.getItem(this.TOKEN_KEY) ?? '';
     }
 
-    setToken(token: string): void {
+    setTokenToLocalStorage(token: string): void {
         return localStorage.setItem(this.TOKEN_KEY, token);
     }
 
+    setTokenToSessionStorage(token: string): void {
+        return sessionStorage.setItem(this.TOKEN_KEY, token);
+    }
+
     removeToken(): void {
-        return localStorage.removeItem(this.TOKEN_KEY);
+        localStorage.removeItem(this.TOKEN_KEY);
+        sessionStorage.removeItem(this.TOKEN_KEY);
     }
 
     getUserId(): number {

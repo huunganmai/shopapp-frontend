@@ -14,7 +14,7 @@ export class AdminComponent implements OnInit {
     constructor(private router: Router, private tokenService: TokenService, private userService: UserService) {}
 
     ngOnInit(): void {
-        this.userResponse = this.userService.getUserResponseFromLocalStorage();
+        this.userResponse = this.userService.getUserResponseFromStorage();
     }
 
     showAdminComponent(componentName: string): void {
@@ -33,9 +33,9 @@ export class AdminComponent implements OnInit {
     }
 
     logout() {
-        this.userService.removeUserResponseFromLocalStorage();
+        this.userService.removeUserResponseFromStorage();
         this.tokenService.removeToken();
-        this.userResponse = this.userService.getUserResponseFromLocalStorage();
+        this.userResponse = this.userService.getUserResponseFromStorage();
         this.router.navigate(['/']);
     }
 }

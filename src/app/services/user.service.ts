@@ -61,9 +61,21 @@ export class UserService {
         }
     }
 
-    getUserResponseFromLocalStorage(): UserResponse | null {
+    saveUserResponseToSessionStorage(userResponse?: UserResponse) {
         try {
-            const userResponseJSON = localStorage.getItem('user');
+            debugger;
+            if (!userResponse) {
+                return;
+            }
+            sessionStorage.setItem('user', JSON.stringify(userResponse));
+        } catch (error) {
+            console.error('Error saving user response to Sesstion Storage: ', error);
+        }
+    }
+
+    getUserResponseFromStorage(): UserResponse | null {
+        try {
+            const userResponseJSON = localStorage.getItem('user') ?? sessionStorage.getItem('user');
             if (userResponseJSON == null || userResponseJSON == undefined) {
                 return null;
             }
@@ -76,7 +88,7 @@ export class UserService {
         }
     }
 
-    removeUserResponseFromLocalStorage(): void {
+    removeUserResponseFromStorage(): void {
         try {
             localStorage.removeItem('user');
             console.log('User data removing from local storage');
