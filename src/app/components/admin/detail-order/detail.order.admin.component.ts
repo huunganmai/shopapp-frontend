@@ -60,7 +60,7 @@ export class DetailOrderAdminComponent implements OnInit {
                     );
                 }
                 this.orderResponse.order_details = response.data.order_details.map((order_detail: any) => {
-                    order_detail.product.thumbnail = `${environment.apiBaseUrl}/product_images/${order_detail.product.thumbnail}`;
+                    order_detail.product.thumbnail = `${environment.apiBaseUrl}/product-images/${order_detail.product.thumbnail}`;
                     order_detail.number_of_products = order_detail.numberOfProducts;
                     //order_detail.total_money = order_detail.totalMoney
                     return order_detail;

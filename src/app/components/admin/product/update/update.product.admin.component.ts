@@ -70,7 +70,7 @@ export class UpdateProductAdminComponent implements OnInit {
                 this.product = response.data;
                 this.updatedProduct = { ...response.data };
                 this.updatedProduct.product_images.forEach(productImage => {
-                    productImage.image_url = `${environment.apiBaseUrl}/product_images/${productImage.image_url}`;
+                    productImage.image_url = `${environment.apiBaseUrl}/product-images/${productImage.image_url}`;
                 });
                 this.addedProductImage = [];
             },
@@ -116,7 +116,7 @@ export class UpdateProductAdminComponent implements OnInit {
             next: (response: ApiResponse) => {
                 debugger;
                 response.data.forEach((productImage: any) => {
-                    productImage.image_url = `${environment.apiBaseUrl}/product_images/${productImage.image_url}`;
+                    productImage.image_url = `${environment.apiBaseUrl}/product-images/${productImage.image_url}`;
                 });
                 this.product.product_images = [...this.product.product_images, ...response.data];
                 event.target.files = null;

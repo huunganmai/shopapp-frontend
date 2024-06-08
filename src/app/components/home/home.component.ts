@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
             next: (response: ApiResponse) => {
                 debugger;
                 response.data.products.forEach((product: Product) => {
-                    product.url = `${environment.apiBaseUrl}/product_images/${product.thumbnail}`;
+                    product.url = `${environment.apiBaseUrl}/product-images/${product.thumbnail}`;
                 });
                 this.products = response.data.products;
                 this.totalPages = response.data.totalPages;

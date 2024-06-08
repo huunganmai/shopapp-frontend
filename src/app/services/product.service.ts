@@ -57,7 +57,7 @@ export class ProductService {
             headers: this.httpUtilService.createHeaders('vi')
         };
         return this.http.post<ApiResponse>(
-            `${environment.apiBaseUrl}/product_images/uploads/${productId}`,
+            `${environment.apiBaseUrl}/product-images/uploads/${productId}`,
             formData,
             newHeader
         );
@@ -68,6 +68,6 @@ export class ProductService {
     }
 
     deleteProductImage(productImageId: number): Observable<ApiResponse> {
-        return this.http.delete<ApiResponse>(`${environment.apiBaseUrl}/product_images/${productImageId}`);
+        return this.http.delete<ApiResponse>(`${environment.apiBaseUrl}/product-images/${productImageId}`);
     }
 }
