@@ -1,17 +1,34 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
+import { ApiResponse } from '../response/api.response';
+import { HttpClient } from '@angular/common/http';
+import { HttpUtilService } from './http.util.service';
+
+import { environment } from '../environments/environment';
+import { RefreshTokenDTO } from '../dtos/user/refresh.token.dto';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TokenService {
     private readonly TOKEN_KEY = 'access_token';
+    private readonly REFRESH_TOKEN_KEY = 'refresh_token';
+    private apiUser = `${environment.apiBaseUrl}/users`;
     private jwtHelperService = new JwtHelperService();
-    constructor() {}
+    constructor(private http: HttpClient, private httpUtilService: HttpUtilService) {}
 
     getToken(): string {
         debugger;
         return localStorage.getItem(this.TOKEN_KEY) ?? sessionStorage.getItem(this.TOKEN_KEY) ?? '';
+    }
+
+    getRefreshToken(): string {
+        return localStorage.getItem(this.REFRESH_TOKEN_KEY) ?? '';
+    }
+
+    setRefreshTokenToLocalStorage(refreshToken: string): void {
+        return localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
     }
 
     setTokenToLocalStorage(token: string): void {
@@ -27,6 +44,10 @@ export class TokenService {
         sessionStorage.removeItem(this.TOKEN_KEY);
     }
 
+    removeRefreshToken(): void {
+        localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    }
+
     getUserId(): number {
         debugger;
         const token = this.getToken();
@@ -40,5 +61,13 @@ export class TokenService {
     isTokenExpired(): boolean {
         const token = this.getToken();
         return this.jwtHelperService.isTokenExpired(token);
+    }
+
+    refreshToken(refreshTokenDTO: RefreshTokenDTO): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(`${this.apiUser}/refresh-token`, refreshTokenDTO, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 }

@@ -110,7 +110,13 @@ export class DetailProductComponent implements OnInit {
     }
 
     buyNow(): void {
+        debugger;
         if (this.isPressedAddToCart) {
+            this.router.navigate(['/orders']);
+        } else {
+            if (this.product) {
+                this.cartService.addToCart(this.product.id, this.quantity);
+            }
             this.router.navigate(['/orders']);
         }
     }

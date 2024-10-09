@@ -56,9 +56,7 @@ export class HeaderComponent implements OnInit {
             debugger;
             this.router.navigate(['/user-profile']);
         } else if (index === 2) {
-            this.userService.removeUserResponseFromStorage();
-            this.tokenService.removeToken();
-            this.userService.getUserResponseFromStorage();
+            this.userService.logout();
             this.userResponse = this.userService.getUserResponseFromStorage();
         }
         this.isPopoverOpen = false;

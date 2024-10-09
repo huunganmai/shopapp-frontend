@@ -13,6 +13,7 @@ import { ApiResponse } from '../response/api.response';
 })
 export class OrderService {
     private orderApi = `${environment.apiBaseUrl}/orders`;
+    private orderDetailApi = `${environment.apiBaseUrl}/order-details`;
     private apiAuthConfig = {
         headers: this.httpUtilService.createHeaders('vi')
     };
@@ -24,7 +25,7 @@ export class OrderService {
     }
 
     getOrderById(orderId: number): Observable<ApiResponse> {
-        return this.http.get<ApiResponse>(`${this.orderApi}/${orderId}`);
+        return this.http.get<ApiResponse>(`${this.orderDetailApi}/order/${orderId}`);
     }
 
     getOrderByKeyword(keyword: string, page: number, limit: number): Observable<ApiResponse> {

@@ -68,8 +68,9 @@ export class DetailOrderComponent implements OnInit {
                 this.orderResponse.status = response.data.status;
                 this.orderResponse.total_money = response.data.total_money;
 
+                debugger;
                 this.orderResponse.order_details = response.data.order_details.map((order_detail: OrderDetail) => {
-                    order_detail.product.thumbnail = `${environment.apiBaseUrl}/product-images/${order_detail.product.thumbnail}`;
+                    order_detail.product.thumbnail = `${environment.apiBaseUrl}/product-images/${order_detail.thumbnail}`;
                     return order_detail;
                 });
             },

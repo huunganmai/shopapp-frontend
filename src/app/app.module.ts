@@ -11,7 +11,7 @@ import { DetailProductComponent } from './components/detail-product/detail-produ
 import { OrderComponent } from './components/order/order.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenIntercepter } from './interceptors/token.interceptor';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { DetailOrderComponent } from './components/detail-order/detail-order.component';
@@ -45,7 +45,7 @@ import { AdminModule } from './components/admin/admin.module';
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: TokenIntercepter,
+            useClass: TokenInterceptor,
             multi: true
         }
     ],

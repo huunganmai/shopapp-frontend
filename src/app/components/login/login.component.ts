@@ -63,9 +63,10 @@ export class LoginComponent implements OnInit {
         this.userService.login(loginDTO).subscribe({
             next: (response: ApiResponse) => {
                 debugger;
-                const { token } = response.data;
+                const { token, refresh_token: refreshToken } = response.data;
                 if (this.rememberLogin) {
                     this.tokenService.setTokenToLocalStorage(token);
+                    this.tokenService.setRefreshTokenToLocalStorage(refreshToken);
                 } else {
                     this.tokenService.setTokenToSessionStorage(token);
                 }

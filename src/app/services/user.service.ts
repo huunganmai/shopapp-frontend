@@ -38,6 +38,13 @@ export class UserService {
         return this.http.post<ApiResponse>(this.apiLogin, loginDTO, this.apiConfig);
     }
 
+    logout(): void {
+        this.removeUserResponseFromStorage();
+        this.tokenService.removeToken();
+        this.tokenService.removeRefreshToken();
+        this.getUserResponseFromStorage();
+    }
+
     getUserDetail(token: string): Observable<ApiResponse> {
         return this.http.post<ApiResponse>(this.apiUserDetail, this.apiConfig);
     }
@@ -91,6 +98,7 @@ export class UserService {
     removeUserResponseFromStorage(): void {
         try {
             localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
             console.log('User data removing from local storage');
         } catch (error) {
             console.error('Error remove user data from local storage');

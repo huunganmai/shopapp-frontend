@@ -8,4 +8,5 @@ export interface OrderDetail {
     number_of_products: number;
     total_money: number;
     color?: string;
+    thumbnail: string;
 }

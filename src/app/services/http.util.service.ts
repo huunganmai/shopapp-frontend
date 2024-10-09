@@ -6,7 +6,7 @@ import { TokenService } from './token.service';
     providedIn: 'root'
 })
 export class HttpUtilService {
-    constructor(private tokenService: TokenService) {}
+    constructor() {}
 
     createHeaders(acceptLanguage: string): HttpHeaders {
         return new HttpHeaders({
